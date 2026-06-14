@@ -25,11 +25,14 @@ jobs:
           tag: ${{ github.sha }}
       - name: Setup Kubelogin
         uses: azure/use-kubelogin@v1
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         with:
           kubelogin-version: 'latest' # Specify a version for consistent behavior
+          skip-cache: 'true'
       - name: Azure login
         id: login
-        uses: azure/login@v1.4.3
+        uses: azure/login@v1.4.6
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Set AKS context
