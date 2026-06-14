@@ -57,7 +57,7 @@ spec:
         "kubernetes.io/os": linux
       containers:
       - name: azure-vote-front
-        image: devsecopsstpmb123456.azurecr.io/azure-voting-app-redis/azure-vote-front:v1.0.0
+        image: devsecopsstpmb123456.azurecr.io/azure-voting-app-redis/azure-vote-front@sha256:sha256:96cf6521e1981991b2ca6633fc60199af79ce858a0a187f4fcf2e1ce987089c7
         imagePullPolicy: Always
         ports:
         - containerPort: 80
