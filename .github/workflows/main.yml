@@ -46,9 +46,23 @@ jobs:
       - name: Setup kubectl
         id: install-kubectl
         uses: azure/setup-kubectl@v3
+      - name: checkout code
+        uses: actions/checkout@v4
       - name: Update Kubernetes Image Tag
-        run: |
-          sed -i "s|image:.*|image: devsecopsstpmb123456.azurecr.io/azure-voting-app-redis/azure-vote-front:${{github.sha}}|g" azure-vote-all-in-one-redis.yaml
+        uses: cheelim1/image-updater@v1.11
+        with:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          REPO_NAME: 'devsecopsstpmb123456.azurecr.io/azure-voting-app-redis/azure-vote-front'
+          REPO_OWNER: 'manmohanbatra'
+          FILE_PATH: 'azure-vote-all-in-one-redis.yaml'
+          IMAGE_TAG: '${{github.sha}}'
+#        run: |
+#          sed -i "s|image:.*|image: devsecopsstpmb123456.azurecr.io/azure-voting-app-redis/azure-vote-front:${{github.sha}}|g" azure-vote-all-in-one-redis.yaml
+#          git config user.name "github-actions[bot]"
+ #         git config user.email "github-actions[bot]@users.noreply.github.com"
+ #         git checkout -b main
+ #         git commit -am "Update image tag to ${{ github.event.inputs.new_tag }}"
+ #         git push origin update-image
 #          yq -i '.spec.template.spec.containers[0].image = "devsecopsstpmb123456.azurecr.io/azure-voting-app-redis/azure-vote-front:{{github.sha}}"' azure-vote-all-in-one-redis.yaml
 #          sed -i 's|image: devsecopsstpmb123456.azurecr.io/azure-voting-app-redis/azure-vote-front:v1.0.0|image: devsecopsstpmb123456.azurecr.io/azure-voting-app-redis/azure-vote-front:${{github.sha}}|g' azure-vote-all-in-one-redis.yaml
       - name: Deploy to AKS
