@@ -46,6 +46,10 @@ jobs:
       - name: Setup kubectl
         id: install-kubectl
         uses: azure/setup-kubectl@v3
+      - name: Update Kubernetes Image Tag
+        run: |
+          yq -i '.spec.template.spec.containers[0].image = "devsecopsstpmb123456.azurecr.io/azure-voting-app-redis/azure-vote-front:{{github.sha}}"' azure-vote-all-in-one-redis.yaml
+#          sed -i 's|image: devsecopsstpmb123456.azurecr.io/azure-voting-app-redis/azure-vote-front:v1.0.0|image: devsecopsstpmb123456.azurecr.io/azure-voting-app-redis/azure-vote-front:${{github.sha}}|g' azure-vote-all-in-one-redis.yaml
       - name: Deploy to AKS
         id: deploy-aks
         uses: Azure/k8s-deploy@v4
@@ -55,6 +59,3 @@ jobs:
              azure-vote-all-in-one-redis.yaml
           images: '${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/azure-vote-front:${{ github.sha }}'
           pull-images: false
-      - name: Update Kubernetes Image Tag
-        run: sed -i 's|image: :devsecopsstpmb123456.azurecr.io/azure-voting-app-redis/azure-vote-front:v1.0.0|image: devsecopsstpmb123456.azurecr.io/azure-voting-app-redis/azure-vote-front:${{github.sha}}|g' azure-vote-all-in-one-redis.yaml
-#        sed -i "s/IMAGE_TAG_PLACEHOLDER/${{ github.sha }}/g" azure-vote-all-in-one-redis.yaml
