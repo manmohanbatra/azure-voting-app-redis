@@ -55,3 +55,10 @@ jobs:
              azure-vote-all-in-one-redis.yaml
           images: '${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/azure-vote-front:${{ github.sha }}'
           pull-images: false
+      - name: Update Kubernetes Image Tag
+        run: |
+        - name: Update Image Tag in deployment.yaml
+        run: |
+          # Replaces the placeholder or old tag with the exact Git SHA
+          # Assumes your manifest has: image: ghcr.io/username/repo/my-app:placeholder
+        sed -i "s/IMAGE_TAG_PLACEHOLDER/${{ github.sha }}/g" azure-vote-all-in-one-redis.yaml
