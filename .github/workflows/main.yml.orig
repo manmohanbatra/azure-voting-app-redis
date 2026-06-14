@@ -38,8 +38,6 @@ jobs:
         with:
           resource-group: '${{ secrets.resource_group }}' 
           cluster-name: '${{ secrets.cluster_name }}'
-      - name: convert-kubeconfig
-        run: | kubelogin convert-kubeconfig -l azurecli
       - name: Setup kubectl
         id: install-kubectl
         uses: azure/setup-kubectl@v3
