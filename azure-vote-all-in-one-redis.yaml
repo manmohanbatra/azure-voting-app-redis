@@ -53,11 +53,13 @@ spec:
       labels:
         app: azure-vote-front
     spec:
+      terminationGracePeriodSeconds: 30
       nodeSelector:
         "kubernetes.io/os": linux
       containers:
       - name: azure-vote-front
-        image: devsecopsstpmb123456.azurecr.io/azure-voting-app-redis/azure-vote-front@sha256:sha256:96cf6521e1981991b2ca6633fc60199af79ce858a0a187f4fcf2e1ce987089c7
+#        image: devsecopsstpmb123456.azurecr.io/azure-voting-app-redis/azure-vote-front@sha256:5af97e31489cf39c869464631fe5946cbfad6dc8f41e7ff51cfb5cce187e14d9
+        image: devsecopsstpmb123456.azurecr.io/azure-voting-app-redis/azure-vote-front@sha256:96cf6521e1981991b2ca6633fc60199af79ce858a0a187f4fcf2e1ce987089c7
         imagePullPolicy: Always
         ports:
         - containerPort: 80
